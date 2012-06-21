@@ -1,4 +1,7 @@
-# THis is the structure to add a user name and email address
+###########################################################
+# .gitconfig template by Robert Ellenberg
+# Use the associated git-setup.bash script to configure your system,
+# or simply edit the fields yourself
 [user]
 	name = <FIRST> <LAST>
 	email = <EMAIL>
@@ -19,9 +22,9 @@
     changed = green
     untracked = cyan
 [merge]
-	tool = vimdiff
+    tool = vimdiff
 [difftool]
-	prompt = false
+    prompt = false
 [alias]
     vdiff = difftool
     graph = log --oneline --all --graph
@@ -31,10 +34,17 @@
 [core]
     editor = vim
     excludesfile = ~/.gitignore
+#URL substitution with standard scp syntax allows git-cola to push / pull without needing to consult ./ssh/config
 [url "<DASL_USER>@dasl.mem.drexel.edu:~/repos/"]
     insteadOf = dasl:
+
+#This substitution allows a simple shortcut to your own github account
 [url "git://github.com/<GITHUB_USER>/"]
     insteadOf = github:
-[url "git@github.com:<GITHUB_USER>/"]
+
+# This substitution automatically gives you write access to a read-only
+#   account if your username has write permissions (this does NOT 
+#   magically grant write access otherwise.
+[url "<GITHUB_PUSH_URL>"]
     pushInsteadOf = git://github.com/
     pushInsteadOf = github:
