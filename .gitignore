@@ -1,0 +1,11 @@
+*.zip
+*.tgz
+*.asv
+*.bak
+*.log
+~*
+[Bbin]
+[Rr]elease
+[Dd]ebug
+lib
+Thumbs.db
