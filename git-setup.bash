@@ -8,6 +8,10 @@ function readData(){
     read -p "Please enter your email address:" EMAIL
     read -p "Now your DASL server user name (typically firstLast):" DASL_USER
     read -p "Finally, your Github user name:" GITHUB_USER
+    if [[ ${#GITHUB_USER} == 0 ]]
+    then
+        GITHUB_USER=$DASL_USER
+    fi
     echo "For read-only github URLs, would you like to use"
     read -p "Public Key authentication when attempting to push? [y/N]:" AUTH_METHOD
 
@@ -45,4 +49,14 @@ done
 mv ~/.gitconfig ~/.gitconfig.old
 mv ~/.gitignore ~/.gitignore.old
 sed -e "s/<FIRST> <LAST>/$FULLNAME/g" -e "s/<EMAIL>/$EMAIL/g" -e "s/<DASL_USER>/$DASL_USER/g" -e "s/<GITHUB_USER>/$GITHUB_USER/g" -e "s/<GITHUB_PUSH_URL>/$GITHUB_PUSH_URL/g"  .gitconfig_template > ~/.gitconfig
+
+#Copy over standard git files
 cp .gitignore ~/.gitignore
+
+SOURCED_SEARCH=`grep "git-prompt.bash" ~/.bashrc`
+
+if [[ ${#SOURCED_SEARCH} == 0 ]]
+then
+    cp .git-prompt.bash ~/.git-prompt.bash
+    echo "source ~/.git-prompt.bash" >> ~/.bashrc
+fi
