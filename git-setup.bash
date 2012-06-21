@@ -39,7 +39,10 @@ while [[ $DATAOK == 'N' || $DATAOK == 'n' ]]
 do
     readData
 done
-echo $GITHUB_PUSH_URL
-sed -e "s/<FIRST> <LAST>/$FULLNAME/g" -e "s/<EMAIL>/$EMAIL/g" -e "s/<DASL_USER>/$DASL_USER/g" -e "s/<GITHUB_USER>/$GITHUB_USER/g" -e "s/<GITHUB_PUSH_URL>/$GITHUB_PUSH_URL/g"  .gitconfig_template > test1.txt
+#echo $GITHUB_PUSH_URL
 
-cat test1.txt
+# Backup old git files for user
+mv ~/.gitconfig ~/.gitconfig.old
+mv ~/.gitignore ~/.gitignore.old
+sed -e "s/<FIRST> <LAST>/$FULLNAME/g" -e "s/<EMAIL>/$EMAIL/g" -e "s/<DASL_USER>/$DASL_USER/g" -e "s/<GITHUB_USER>/$GITHUB_USER/g" -e "s/<GITHUB_PUSH_URL>/$GITHUB_PUSH_URL/g"  .gitconfig_template > ~/.gitconfig
+cp .gitignore ~/.gitignore
