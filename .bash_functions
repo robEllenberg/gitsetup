@@ -19,3 +19,7 @@ else
 fi
 
 }
+
+function whatsmyname() {
+getent passwd `whoami` | cut -d ':' -f 5
+}

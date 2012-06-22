@@ -1,4 +1,8 @@
 #!/bin/bash
+
+###########################################################################
+# Installation script for Rob's tweaked git settings and streamlined config
+############################################################################
 function pause(){
    read -p "$*"
 }
@@ -32,11 +36,19 @@ function readData(){
     read -p 'Are these correct? [Y/n]' DATAOK
 }
 
-#mkdir temp
-#cd temp
-#wget http://dasl.mem.drexel.edu/ellenberg/setup/gitsetup.tgz
-#tar -zxvf gitsetup.tgz
+function bashrc_source() {
 
+local SOURCED_SEARCH=`grep $1 ~/.bashrc`
+
+if [[ ${#SOURCED_SEARCH} == 0 ]]
+then
+    cp $1 ~/$1
+    echo "source $1" >> ~/.bashrc
+fi
+}
+
+#make sure handy bash functions are available
+source .bash_functions
 DATAOK='N'
 
 while [[ $DATAOK == 'N' || $DATAOK == 'n' ]]
@@ -48,15 +60,14 @@ done
 # Backup old git files for user
 mv ~/.gitconfig ~/.gitconfig.old
 mv ~/.gitignore ~/.gitignore.old
+#Super ugly field replacement
+#TODO: Store the user data in a table for future use, or be smarter about default values
 sed -e "s/<FIRST> <LAST>/$FULLNAME/g" -e "s/<EMAIL>/$EMAIL/g" -e "s/<DASL_USER>/$DASL_USER/g" -e "s/<GITHUB_USER>/$GITHUB_USER/g" -e "s/<GITHUB_PUSH_URL>/$GITHUB_PUSH_URL/g"  .gitconfig_template > ~/.gitconfig
 
-#Copy over standard git files
+#Copy over important files
 cp .gitignore ~/.gitignore
 
-SOURCED_SEARCH=`grep "git-prompt.bash" ~/.bashrc`
+#copy and source files if they don't exist
+bashrc_source ".git-prompt.bash"
+bashrc_source ".bash_functions"
 
-if [[ ${#SOURCED_SEARCH} == 0 ]]
-then
-    cp .git-prompt.bash ~/.git-prompt.bash
-    echo "source ~/.git-prompt.bash" >> ~/.bashrc
-fi
