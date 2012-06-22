@@ -1,0 +1,4 @@
+Bash completion of repos over SSH
+
+1) hack version, basic listing via ssh filtered through an argument by grep
+2) custom bash-completion?
