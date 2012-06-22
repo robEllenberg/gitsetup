@@ -8,14 +8,25 @@ function pause(){
 }
 
 function readData(){
-    read -p "Please enter your full name:" FULLNAME
-    read -p "Please enter your email address:" EMAIL
-    read -p "Now your DASL server user name (typically firstLast):" DASL_USER
-    read -p "Finally, your Github user name:" GITHUB_USER
+    if [[ $FULLNAME == '' ]]
+    then
+        FULLNAME=`whatsmyname`
+    fi
+
+    if [[ $DASL_USER == '' ]]
+    then
+        DASL_USER=`echo "$FULLNAME" | sed 's/\ //'`
+        DASL_USER=`echo "$DASL_USER" | sed 's/^\(.\)/\L\1/'`
+    fi
+    read -e -p "Please enter your full name:" -i "$FULLNAME" FULLNAME
+    read -e -p "Please enter your email address:" -i "$EMAIL" EMAIL
+    read -e -p "Now your DASL server user name:" -i "$DASL_USER" DASL_USER
+    
     if [[ ${#GITHUB_USER} == 0 ]]
     then
         GITHUB_USER=$DASL_USER
     fi
+    read -e -p "Finally, your Github user name:" -i "$GITHUB_USER" GITHUB_USER
     echo "For read-only github URLs, would you like to use"
     read -p "Public Key authentication when attempting to push? [y/N]:" AUTH_METHOD
 
