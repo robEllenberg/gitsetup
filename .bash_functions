@@ -10,4 +10,12 @@ fi
 ssh "$1" "ls $REPOS"
 }
 
-function rls() { sls $1 $2 | grep $3 ; }
+function rls() { 
+if [[ $3 == '' ]]
+then
+    sls $1 $2
+else
+    sls $1 $2 | grep $3
+fi
+
+}

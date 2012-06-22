@@ -23,12 +23,14 @@
     untracked = cyan
 [merge]
     tool = vimdiff
+
 [difftool]
     prompt = false
 [alias]
     vdiff = difftool
     graph = log --oneline --all --graph
-    wdiff = giff --color--words
+    wdiff = diff --color--words
+    update = pull --rebase
 [branch]
     autosetupmerge = true
 [core]
