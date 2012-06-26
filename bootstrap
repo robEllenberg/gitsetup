@@ -3,6 +3,8 @@
 ###########################################################################
 # Installation script for Rob's tweaked git settings and streamlined config
 ############################################################################
+
+GITSETUP=temp-gitsetup
 function pause(){
    read -p "$*"
 }
@@ -60,8 +62,8 @@ fi
 
 #1) Extract gitsetup archive from the master branch
 wget https://github.com/robEllenberg/gitsetup/zipball/master -O gitsetup.zip
-unzip -j gitsetup.zip -d gitsetup_temp
-cd gitsetup_temp
+unzip -j gitsetup.zip -d $GITSETUP
+cd $GITSETUP
 ls
 
 read -p "files extracted, press key to continue..."
@@ -92,10 +94,11 @@ bashrc_source ".git-prompt.bash"
 bashrc_source ".bash_functions"
 
 #Finally, optionally clean up source files
-read -p "Would you like to remove the temporary folder gitsetup_temp?" CLEAN_FOLDER
+read -p "Would you like to remove the temporary folder $GITSETUP [Y/n]?" -i 'Y' CLEAN_FOLDER
 
-if [[ CLEAN_FOLDER == 'y' || CLEAN_FOLDER == 'Y' ]]
+if [[ $CLEAN_FOLDER == 'y' || $CLEAN_FOLDER == 'Y' ]]
 then
+    echo "Removing folder $GITSETUP"
     cd ..
-    rm -rf gitsetup_temp
+    rm -rf $GITSETUP
 fi
