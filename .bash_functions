@@ -21,5 +21,6 @@ fi
 }
 
 function whatsmyname() {
-getent passwd `whoami` | cut -d ':' -f 5
+# look up your username in the passwd file, then strip out just the name and extraneous characters.
+getent passwd `whoami` | cut -d ':' -f 5 | sed 's/,//g'
 }

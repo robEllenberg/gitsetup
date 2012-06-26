@@ -77,6 +77,7 @@ sed -e "s/<FIRST> <LAST>/$FULLNAME/g" -e "s/<EMAIL>/$EMAIL/g" -e "s/<DASL_USER>/
 
 #Copy over important files
 cp .gitignore ~/.gitignore
+cp .git-completion.bash ~/.git-completion.bash
 
 #copy and source files if they don't exist
 bashrc_source ".git-prompt.bash"
