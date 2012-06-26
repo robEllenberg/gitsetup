@@ -60,8 +60,11 @@ fi
 
 #1) Extract gitsetup archive from the master branch
 wget https://github.com/robEllenberg/gitsetup/zipball/master -O gitsetup.zip
-unzip gitsetup.zip -d gitsetup_temp
+unzip -j gitsetup.zip -d gitsetup_temp
 cd gitsetup_temp
+ls
+
+read -p "files extracted, press key to continue..."
 
 #make sure handy bash functions are available
 source .bash_functions
