@@ -19,8 +19,13 @@ function readData(){
     then
         #Choose the default name from the full name, stripped of whitespace and
         #converted to camel case.
-        DASL_USER=`echo "$FULLNAME" | sed 's/\ //'`
-        DASL_USER=`echo "$DASL_USER" | sed 's/^\(.\)/\L\1/'`
+        DASL_USER=`echo "$FULLNAME" | sed -e 's/\ //' -e 's/^\(.\)/\L\1/'`
+    fi
+
+    if [[ $EMAIL == '' ]]
+    then
+        #Strip email out of current .gitconfig
+        EMAIL=`grep email ~/.gitconfig 2> /dev/null | sed 's/[\t ]/\n/g' | tail -n1`
     fi
     read -e -p "Please enter your full name     :" -i "$FULLNAME" FULLNAME
     read -e -p "Please enter your email address :" -i "$EMAIL" EMAIL
