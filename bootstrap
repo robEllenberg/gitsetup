@@ -1,16 +1,19 @@
 #!/bin/bash
-
 ###########################################################################
 # Installation script for Rob's tweaked git settings and streamlined config
+# See DASL git wiki for detailed setup and usage instructions for git and the
+# DASL server.
+# Author: Robert W. Ellenberg
 ############################################################################
 
+#Save common names and starting location for later use
 GITSETUP=temp-gitsetup
 ORIGIN_DIR=`pwd`
-function pause(){
-   read -p "$*"
-}
 
+#Some useful functions for this script.
 function readData(){
+    #Find default full name from the current user's passwd entry, otherwise
+    #keep the old entry.
     if [[ $FULLNAME == '' ]]
     then
         FULLNAME=`whatsmyname`
@@ -18,6 +21,8 @@ function readData(){
 
     if [[ $DASL_USER == '' ]]
     then
+        #Choose the default name from the full name, stripped of whitespace and
+        #converted to camel case.
         DASL_USER=`echo "$FULLNAME" | sed 's/\ //'`
         DASL_USER=`echo "$DASL_USER" | sed 's/^\(.\)/\L\1/'`
     fi
@@ -30,9 +35,10 @@ function readData(){
         GITHUB_USER=$DASL_USER
     fi
     read -e -p "Finally, your Github user name:" -i "$GITHUB_USER" GITHUB_USER
-    echo "For read-only github URLs, would you like to use"
+    echo "\nFor read-only github URLs, would you like to use"
     read -p "Public Key authentication when attempting to push? [y/N]:" AUTH_METHOD
 
+    echo "------------------------------------------------------------"
     echo "Your information as entered is as follows:"
     echo "Author Name is      : $FULLNAME"
     echo "Email is            : $EMAIL"
@@ -46,7 +52,7 @@ function readData(){
         AUTH_METHOD='N'
     fi
     echo "Use SSH Public Key Authentication for Github? $AUTH_METHOD" 
-    
+    echo ""
     read -p 'Are these correct? [Y/n]' DATAOK
 }
 
@@ -77,20 +83,22 @@ while [[ $DATAOK == 'N' || $DATAOK == 'n' ]]
 do
     readData
 done
-#echo $GITHUB_PUSH_URL
 
 # Backup old git files for user
 mv ~/.gitconfig ~/.gitconfig.old
 mv ~/.gitignore ~/.gitignore.old
 #Super ugly field replacement
 #TODO: Store the user data in a table for future use, or be smarter about default values
+echo "Generating .gitconfig file from your information..."
 sed -e "s/<FIRST> <LAST>/$FULLNAME/g" -e "s/<EMAIL>/$EMAIL/g" -e "s/<DASL_USER>/$DASL_USER/g" -e "s/<GITHUB_USER>/$GITHUB_USER/g" -e "s/<GITHUB_PUSH_URL>/$GITHUB_PUSH_URL/g"  .gitconfig_template > ~/.gitconfig
 
+echo "Copying miscellaneous files to your home folder..."
 #Copy over important files
 cp .gitignore ~/.gitignore
 cp .git-completion.bash ~/.git-completion.bash
 
 #copy and source files if they don't exist
+echo "Setting up colored bash prompt for git repositories..."
 bashrc_source ".git-prompt.bash"
 bashrc_source ".bash_functions"
 
@@ -99,7 +107,7 @@ read -p "Would you like to remove the temporary folder $GITSETUP [Y/n]?" -i 'Y' 
 
 if [[ $CLEAN_FOLDER =~ ^[Yy]$ ]]
 then
-    echo "Removing folder $GITSETUP"
+    echo "Removing folder $GITSETUP..."
     cd $ORIGIN_DIR
     rm -rf $GITSETUP
 fi
@@ -107,7 +115,8 @@ read -p "Would you like to remove this bootstrap script and gitsetup.zip archive
 
 if [[ $CLEAN_FILES =~ ^[Yy]$ ]] 
 then
-    echo "Removing archive gitsetup.zip and bootstrap script"
+    echo "Removing archive gitsetup.zip and bootstrap script..."
     cd $ORIGIN_DIR
     rm gitsetup.zip bootstrap
 fi
+echo "Setup complete!"
