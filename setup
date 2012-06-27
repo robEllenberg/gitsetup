@@ -6,6 +6,9 @@
 # Author: Robert W. Ellenberg
 ############################################################################
 
+#Initialization of misc vars and flags
+MINGW_CHECK=`uname | grep "MINGW"` 
+
 #Some useful functions for this script.
 function readData(){
     #Find default full name from the current user's passwd entry, otherwise
@@ -27,15 +30,17 @@ function readData(){
         #Strip email out of current .gitconfig
         EMAIL=`grep email ~/.gitconfig 2> /dev/null | sed 's/[\t ]/\n/g' | tail -n1`
     fi
-    read -e -p "Please enter your full name     :" -i "$FULLNAME" FULLNAME
-    read -e -p "Please enter your email address :" -i "$EMAIL" EMAIL
-    read -e -p "Now your DASL server user name  :" -i "$DASL_USER" DASL_USER
+
+    easyread "Please enter your full name" "$FULLNAME";FULLNAME=$REPLY
+    easyread "Please enter your email address" "$EMAIL";EMAIL=$REPLY
+    easyread "Now your DASL server user name" "$DASL_USER";DASL_USER=$REPLY
     
     if [[ ${#GITHUB_USER} == 0 ]]
     then
         GITHUB_USER=$DASL_USER
     fi
-    read -e -p "Finally, your Github user name  :" -i "$GITHUB_USER" GITHUB_USER
+    easyread "Finally, your Github user name" "$DASL_USER";GITHUB_USER=$REPLY
+
     echo -e "\nFor read-only github URLs, would you like to use"
     read -p "Public Key authentication when attempting to push? [y/N]:" AUTH_METHOD
 
@@ -69,6 +74,20 @@ then
 fi
 }
 
+function easyread() {
+if [[ ${#MINGW_CHECK} == 0 ]]
+then
+    read -e -p "$1:" -i "$2"
+else
+    read -e -p "$1 [$2]:"
+fi
+#Copy default value into return field
+if [[ $REPLY == '' ]]
+then
+    REPLY=$2
+fi
+}
+
 #make sure handy bash functions are available
 source .bash_functions
 DATAOK='N'
@@ -98,7 +117,6 @@ echo "Setting up colored bash prompt for git repositories..."
 bashrc_source ".bash_functions"
 
 #Avoid sourcing and copying the custom git bash prompt for windows
-MINGW_CHECK=`uname | grep "MINGW"` 
 if [[ ${#MINGW_CHECK} == 0 ]]
 then
     bashrc_source ".git-prompt.bash"

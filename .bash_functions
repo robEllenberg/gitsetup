@@ -22,8 +22,12 @@ fi
 
 function whatsmyname() {
 # look up your username in the passwd file, then strip out just the name and extraneous characters.
-getent passwd `whoami` | cut -d ':' -f 5 | sed 's/,//g'
-
+if [[ ${#MINGW_CHECK} == 0 ]]
+then
+    getent passwd `whoami` | cut -d ':' -f 5 | sed 's/,//g'
+else
+    whoami | sed 's/\\/\n/g' | tail -n 1
+fi
 }
 
 function execheck() { 
