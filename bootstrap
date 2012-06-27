@@ -5,6 +5,7 @@
 ############################################################################
 
 GITSETUP=temp-gitsetup
+ORIGIN_DIR=`pwd`
 function pause(){
    read -p "$*"
 }
@@ -96,17 +97,17 @@ bashrc_source ".bash_functions"
 #Finally, optionally clean up source files
 read -p "Would you like to remove the temporary folder $GITSETUP [Y/n]?" -i 'Y' CLEAN_FOLDER
 
-if [[ $CLEAN_FOLDER == ^[Yy]$ ]]
+if [[ $CLEAN_FOLDER =~ ^[Yy]$ ]]
 then
     echo "Removing folder $GITSETUP"
-    cd ..
+    cd $ORIGIN_DIR
     rm -rf $GITSETUP
 fi
 read -p "Would you like to remove this bootstrap script and gitsetup.zip archive? [y/N]?" -i 'n' CLEAN_FILES
 
-if [[ $CLEAN_FILES == ^[Yy]$ ]] 
+if [[ $CLEAN_FILES =~ ^[Yy]$ ]] 
 then
-    echo "Removing folder $GITSETUP"
-    cd ..
-    rm -rf $GITSETUP
+    echo "Removing archive gitsetup.zip and bootstrap script"
+    cd $ORIGIN_DIR
+    rm gitsetup.zip bootstrap
 fi
