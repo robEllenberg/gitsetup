@@ -23,4 +23,9 @@ fi
 function whatsmyname() {
 # look up your username in the passwd file, then strip out just the name and extraneous characters.
 getent passwd `whoami` | cut -d ':' -f 5 | sed 's/,//g'
+
+}
+
+function execheck() { 
+command -v $1 >/dev/null 2>&1 || { echo >&2 "$1 is required but it's not installed.  Aborting..."; exit 1; }
 }

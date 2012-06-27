@@ -6,10 +6,6 @@
 # Author: Robert W. Ellenberg
 ############################################################################
 
-#Save common names and starting location for later use
-GITSETUP=temp-gitsetup
-ORIGIN_DIR=`pwd`
-
 #Some useful functions for this script.
 function readData(){
     #Find default full name from the current user's passwd entry, otherwise
@@ -68,14 +64,6 @@ then
 fi
 }
 
-#1) Extract gitsetup archive from the master branch
-wget https://github.com/robEllenberg/gitsetup/zipball/master -O gitsetup.zip
-unzip -j gitsetup.zip -d $GITSETUP
-cd $GITSETUP
-ls
-
-read -p "Files extracted, press key to continue..."
-
 #make sure handy bash functions are available
 source .bash_functions
 DATAOK='N'
@@ -104,21 +92,4 @@ echo "Setting up colored bash prompt for git repositories..."
 bashrc_source ".git-prompt.bash"
 bashrc_source ".bash_functions"
 
-#Finally, optionally clean up source files
-read -p "Would you like to remove the temporary folder $GITSETUP [Y/n]?" -i 'Y' CLEAN_FOLDER
-
-if [[ $CLEAN_FOLDER =~ ^[Yy]$ ]]
-then
-    echo "Removing folder $GITSETUP..."
-    cd $ORIGIN_DIR
-    rm -rf $GITSETUP
-fi
-read -p "Would you like to remove this bootstrap script and gitsetup.zip archive? [y/N]?" -i 'n' CLEAN_FILES
-
-if [[ $CLEAN_FILES =~ ^[Yy]$ ]] 
-then
-    echo "Removing archive gitsetup.zip and bootstrap script..."
-    cd $ORIGIN_DIR
-    rm gitsetup.zip bootstrap
-fi
 echo "Setup complete!"
