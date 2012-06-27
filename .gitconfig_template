@@ -48,5 +48,8 @@
 #   account if your username has write permissions (this does NOT 
 #   magically grant write access otherwise.
 [url "<GITHUB_PUSH_URL>"]
-    pushInsteadOf = git://github.com/
     pushInsteadOf = github:
+
+[url "<GITHUB_GENERIC_PUSH>"]
+    pushInsteadOf = git://github.com/
+    pushInsteadOf = http://github.com/

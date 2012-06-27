@@ -47,8 +47,10 @@ function readData(){
     if [[ $AUTH_METHOD == 'Y' || $AUTH_METHOD == 'y' ]]
     then
         GITHUB_PUSH_URL="git@github.com:$GITHUB_USER\/"
+        GITHUB_GENERIC_PUSH="git@github.com:"
     else
         GITHUB_PUSH_URL="https:\/\/$GITHUB_USER@github.com\/$GITHUB_USER\/"
+        GITHUB_GENERIC_PUSH="https:\/\/$GITHUB_USER@github.com\/"
         AUTH_METHOD='N'
     fi
     echo -e "Use SSH Public Key Authentication for Github? $AUTH_METHOD\n" 
@@ -90,7 +92,7 @@ mv ~/.gitignore ~/.gitignore.old
 #TODO: Store the user data in a table for future use, or be smarter about default values
 echo "-------------------------------------------------------------"
 echo "Generating .gitconfig file from your information..."
-sed -e "s/<FIRST> <LAST>/$FULLNAME/g" -e "s/<EMAIL>/$EMAIL/g" -e "s/<DASL_USER>/$DASL_USER/g" -e "s/<GITHUB_USER>/$GITHUB_USER/g" -e "s/<GITHUB_PUSH_URL>/$GITHUB_PUSH_URL/g"  .gitconfig_template > ~/.gitconfig
+sed -e "s/<FIRST> <LAST>/$FULLNAME/g" -e "s/<EMAIL>/$EMAIL/g" -e "s/<DASL_USER>/$DASL_USER/g" -e "s/<GITHUB_USER>/$GITHUB_USER/g" -e "s/<GITHUB_PUSH_URL>/$GITHUB_PUSH_URL/g" -e "s/<GITHUB_GENERIC_PUSH>/$GITHUB_GENERIC_PUSH/g" .gitconfig_template > ~/.gitconfig
 
 echo "Copying miscellaneous files to your home folder..."
 #Copy over important files
