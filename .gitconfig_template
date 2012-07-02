@@ -27,10 +27,16 @@
 [difftool]
     prompt = false
 [alias]
+    #Short for vimdiff, which is configured above
     vdiff = difftool
-    graph = log --oneline --all --graph
+    #Fancy history graph in the terminal
+    graph = log --oneline --date-order --graph --all --decorate
     wdiff = diff --color--words
     update = pull --rebase
+    #Thanks to David Gageot here: https://gist.github.com/492227
+    wip = !"git add -A; git ls-files --deleted -z | xargs -0 git rm; git commit -m \"wip\""
+    unwip = !"git log -n 1 | grep -q -c wip && git reset HEAD~1"
+    
 [branch]
     autosetupmerge = true
 [core]
