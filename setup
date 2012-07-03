@@ -70,7 +70,7 @@ local SOURCED_SEARCH=`grep $1 ~/.bashrc`
 if [[ ${#SOURCED_SEARCH} == 0 ]]
 then
     cp $1 ~/$1
-    echo "source $1" >> ~/.bashrc
+    echo "source ~/$1" >> ~/.bashrc
 fi
 }
 
