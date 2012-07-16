@@ -47,14 +47,21 @@
     insteadOf = dasl:
 
 #This substitution allows a simple shortcut to your own github account
+# Use like this: git clone mygithub:repo points directly to that repo
+# git://github.com/<GITHUB_USER>/repo
 [url "git://github.com/<GITHUB_USER>/"]
+    insteadOf = mygithub:
+
+#This substitution allows a simple shortcut to github
+# Use like this: git clone github:username/repo
+[url "git://github.com/"]
     insteadOf = github:
 
 # This substitution automatically gives you write access to a read-only
 #   account if your username has write permissions (this does NOT 
 #   magically grant write access otherwise.
 [url "<GITHUB_PUSH_URL>"]
-    pushInsteadOf = github:
+    pushInsteadOf = mygithub:
 
 [url "<GITHUB_GENERIC_PUSH>"]
     pushInsteadOf = git://github.com/
