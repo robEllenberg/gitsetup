@@ -38,8 +38,8 @@
     unwip = !"git log -n 1 | grep -q -c wip && git reset HEAD~1"
     #Experimental url-expansion in case you want a hard-coded url after the
     #fact, or want to convert your current URL's to this system for some reason
-    url-expand = !"sed -i -e 's,mygithub:,git://github.com/<GITHUB_USER>/,g' -e 's,github:,git://github.com/,g' -e 's,dasl:,<DASL_USER>@dasl.mem.drexel.edu:~/repos/,g' .git/config"
-    url-contract = !"sed -i -e 's,git://github.com/<GITHUB_USER>/,mygithub:,g' -e 's,git://github.com/,github:,g' -e 's,<DASL_USER>@dasl.mem.drexel.edu:~/repos/,dasl:,g' .git/config"
+    url-expand = !"sed -i -e 's,mygithub:,git://github.com/<GITHUB_USER>/,g' -e 's,github:,git://github.com/,g' -e 's,mydasl:,<DASL_USER>@dasl.mem.drexel.edu:~/repos/,g' -e 's,dasl:,<DASL_USER>@dasl.mem.drexel.edu:,g' .git/config"
+    url-contract = !"sed -i -e 's,git://github.com/<GITHUB_USER>/,mygithub:,g' -e 's,git://github.com/,github:,g' -e 's,<DASL_USER>@dasl.mem.drexel.edu:~/repos/,mydasl:,g' -e 's,<DASL_USER>@dasl.mem.drexel.edu:,dasl:,g' .git/config"
 [branch]
     autosetupmerge = true
 [core]
@@ -47,8 +47,10 @@
     excludesfile = ~/.gitignore
 #URL substitution with standard scp syntax allows git-cola to push / pull without needing to consult ./ssh/config
 [url "<DASL_USER>@dasl.mem.drexel.edu:~/repos/"]
+    insteadOf = mydasl:
+#Crude hack since git config does first-match. If the strict "mydasl" match doesn't work, try the broader root substitution:
+[url "<DASL_USER>@dasl.mem.drexel.edu:"]
     insteadOf = dasl:
-
 #This substitution allows a simple shortcut to your own github account
 # Use like this: git clone mygithub:repo points directly to that repo
 # git://github.com/<GITHUB_USER>/repo
