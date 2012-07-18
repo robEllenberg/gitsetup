@@ -106,9 +106,8 @@ echo "-------------------------------------------------------------"
 echo "Generating .gitconfig file from your information..."
 sed -e "s/<FIRST> <LAST>/$FULLNAME/g" -e "s/<EMAIL>/$EMAIL/g" -e "s/<DASL_USER>/$DASL_USER/g" -e "s/<GITHUB_USER>/$GITHUB_USER/g" -e "s/<GITHUB_PUSH_URL>/$GITHUB_PUSH_URL/g" -e "s/<GITHUB_GENERIC_PUSH>/$GITHUB_GENERIC_PUSH/g" .gitconfig_template > ~/.gitconfig
 
+
 echo "Copying miscellaneous files to your home folder..."
-#Copy over important files
-cp .gitignore ~/.gitignore
 cp .git-completion.bash ~/.git-completion.bash
 
 #copy and source files if they don't exist
@@ -122,4 +121,15 @@ then
     bashrc_source ".git-prompt.bash"
 fi
 
+#Set up gitignore files
+read -p "Use Rob's gitignore file? [Y/n]:" GITIGNORE_BASIC
+if [[ $GITIGNORE_BASIC == 'Y' || $GITIGNORE_BASIC == 'y' || ${#GITIGNORE_BASIC} == 0 ]]
+then
+    cp .gitignore ~/.gitignore
+fi
+
+echo " "
+echo "-------------------------------------------------------------"
+echo " "
 echo "Setup complete!"
+echo " "

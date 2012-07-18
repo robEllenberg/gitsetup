@@ -1,11 +1,49 @@
+# Standard exclusions for common archive types and large binary files
 *.zip
 *.tgz
-*.asv
+*.tar.gz
+*.7z
+*.tar
+*.iso
+*.jar
+*.rar
+*.dmg
+
+#Executables and build output
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.ko
+
+# Standard backup and log files
 *.bak
 *.log
+*.tmp
 ~*
+[Tt]emp
 [Bbin]
 [Rr]elease
 [Dd]ebug
 lib
 Thumbs.db
+*.DS_Store
+*.DS_Store?
+*.Trashes
+Icon?
+ehthumbs.db
+*.sql
+
+# Default latex entries for build files
+*.aux
+*.bbl
+*.blg
+*.log
+
+# Standard matlab files that should be ignored
+codegen
+*.mex*
+*.asv
+
