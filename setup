@@ -7,7 +7,15 @@
 ############################################################################
 
 #Initialization of misc vars and flags
-MINGW_CHECK=`uname | grep "MINGW"` 
+
+#Check if working in Mingw32 windows environment vs. linux or mac
+MINGW_STRING=`uname | grep "MINGW"`
+if [[ ${#MINGW_STRING} == 0 ]]
+then
+    MINGW_CHECK=false
+else
+    MINGW_CHECK=true
+fi
 
 #Some useful functions for this script.
 function readData(){
@@ -88,6 +96,17 @@ then
 fi
 }
 
+###############################################################################
+# Script section
+###############################################################################
+
+# Optionally install recommended git tools and accessories
+INSTALL_APPS='N'
+read -p 'Install recommended support applications? [y/N]' INSTALL_APPS
+if [[ $INSTALL_APPS == 'Y' || $INSTALL_APPS == 'y'  && $MINGW_CHECK == false ]]
+then
+    sudo apt-get install git-core vim-gtk gitg gitk diffuse 
+fi
 #make sure handy bash functions are available
 source .bash_functions
 DATAOK='N'

@@ -22,13 +22,12 @@
     changed = green
     untracked = cyan
 [merge]
-    tool = vimdiff
+    tool = diffuse
 
 [difftool]
     prompt = false
+    tool = diffuse
 [alias]
-    #Short for vimdiff, which is configured above
-    vdiff = difftool
     #Fancy history graph in the terminal
     graph = log --oneline --date-order --graph --all --decorate
     wdiff = diff --color-words
