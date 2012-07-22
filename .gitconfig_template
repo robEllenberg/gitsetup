@@ -30,11 +30,10 @@
 [alias]
     #Fancy history graph in the terminal
     graph = log --oneline --date-order --graph --all --decorate
+    #diff commands
+    diffuse = difftool
     wdiff = diff --color-words
     update = pull --rebase
-    #Thanks to David Gageot here: https://gist.github.com/492227
-    wip = !"git add -A; git ls-files --deleted -z | xargs -0 git rm; git commit -m \"wip\""
-    unwip = !"git log -n 1 | grep -q -c wip && git reset HEAD~1"
     #Experimental url-expansion in case you want a hard-coded url after the
     #fact, or want to convert your current URL's to this system for some reason
     url-expand = !"sed -i -e 's,mygithub:,git://github.com/<GITHUB_USER>/,g' -e 's,github:,git://github.com/,g' -e 's,mydasl:,<DASL_USER>@dasl.mem.drexel.edu:~/repos/,g' -e 's,dasl:,<DASL_USER>@dasl.mem.drexel.edu:/home/,g' .git/config"
