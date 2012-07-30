@@ -47,7 +47,7 @@
 [url "<DASL_USER>@dasl.mem.drexel.edu:~/repos/"]
     insteadOf = mydasl:
 #Crude hack since git config does first-match. If the strict "mydasl" match doesn't work, try the broader root substitution:
-[url "<DASL_USER>@dasl.mem.drexel.edu:"]
+[url "<DASL_USER>@dasl.mem.drexel.edu:/home/"]
     insteadOf = dasl:
 #This substitution allows a simple shortcut to your own github account
 # Use like this: git clone mygithub:repo points directly to that repo
