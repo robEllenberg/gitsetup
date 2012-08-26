@@ -4,6 +4,7 @@
 ####################################################################
 GIT_PS1_SHOWDIRTYSTATE=true
 source ~/.git-completion.bash
+[ -d ~/.git-flow-completion.bash ] && source ~/.git-flow-completion.bash
 
 SSH_FLAG=0
 if [ "$SSH_CONNECTION" = "" ] ; then

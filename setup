@@ -115,7 +115,7 @@ INSTALL_APPS='N'
 read -p 'Install recommended support applications? [y/N]' INSTALL_APPS
 if [[ $INSTALL_APPS == 'Y' || $INSTALL_APPS == 'y'  && $MINGW_CHECK == false ]]
 then
-    sudo apt-get install git-core vim-gtk gitg gitk diffuse 
+    sudo apt-get install git-core vim-gtk gitg gitk diffuse git-flow
 fi
 
 DATAOK='N'
@@ -140,6 +140,7 @@ if [[ $MINGW_CHECK == false ]]
 then
     #if wget is available, get the latest version from the repo
     wget https://raw.github.com/git/git/master/contrib/completion/git-completion.bash -O ~/.git-completion.bash
+    wget https://raw.github.com/bobthecow/git-flow-completion/master/git-flow-completion.bash -O ~/.git-flow-completion.bash
 else
     #TODO: Use curl to pull this down
     cp .git-completion_current.bash ~/.git-completion.bash

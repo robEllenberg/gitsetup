@@ -33,7 +33,7 @@ Thumbs.db
 *.DS_Store?
 *.Trashes
 Icon?
-ehthumbs.db
+[Tt]humbs.db
 *.sql
 
 # Default latex entries for build files
@@ -47,3 +47,5 @@ codegen
 *.mex*
 *.asv
 
+# Misc database files that should be generated locally
+cscope.out
