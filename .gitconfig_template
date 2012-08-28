@@ -60,6 +60,11 @@
 [url "git://github.com/<GITHUB_USER>/"]
     insteadOf = mygithub:
 
+[url "<GITHUB_GENERIC_PUSH>"]
+    pushInsteadOf = git://github.com/
+    pushInsteadOf = http://github.com/
+    pushInsteadOf = github:
+
 #This substitution allows a simple shortcut to github
 # Use like this: git clone github:username/repo
 [url "git://github.com/"]
@@ -71,6 +76,3 @@
 [url "<GITHUB_PUSH_URL>"]
     pushInsteadOf = mygithub:
 
-[url "<GITHUB_GENERIC_PUSH>"]
-    pushInsteadOf = git://github.com/
-    pushInsteadOf = http://github.com/
