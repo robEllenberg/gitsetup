@@ -33,7 +33,12 @@
     #diff commands
     diffuse = difftool
     wdiff = diff --color-words
+    #Use this command to update your local branch to match the remote, then put
+    #your changes on top. This prevents messy merges down the road by resolving
+    #conflicts commit-by-commit, instead of all at once as with a merge.
     update = pull --rebase
+    #Show the root directory of your current git repository (useful for some scripts)
+    root = rev-parse --show-toplevel
     #Experimental url-expansion in case you want a hard-coded url after the
     #fact, or want to convert your current URL's to this system for some reason
     url-expand = !"sed -i -e 's,mygithub:,git://github.com/<GITHUB_USER>/,g' -e 's,github:,git://github.com/,g' -e 's,mydasl:,<DASL_USER>@dasl.mem.drexel.edu:~/repos/,g' -e 's,dasl:,<DASL_USER>@dasl.mem.drexel.edu:/home/,g' .git/config"
