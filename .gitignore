@@ -49,3 +49,7 @@ codegen
 
 # Misc database files that should be generated locally
 cscope.out
+
+# Junk files from gedit, vim, etc.
+*.*.swp
+*~
