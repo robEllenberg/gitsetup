@@ -5,15 +5,21 @@
 # This way, you can bulk download any changes from the server, then merge /
 # rebase any changes at your leisure.
 #TODO: Take a remote name or list of names as arguments (or as a config file)
-i#so that you can bulk fetch from only specific remotes, or from all if you wish.
-REPO_DIRS=`find ~ -type d -name ".git" | xargs -n 1 dirname`
+#so that you can bulk fetch from only specific remotes, or from all if you wish.
+if [ ${#1} == 0 ]
+then
+    START_PATH=$HOME
+else
+    START_PATH=$1
+fi
+REPO_DIRS=`find $START_PATH -type d -name ".git" | xargs -n 1 dirname`
 OLD_IFS=$IFS
 IFS=$'\n'
 for g in $REPO_DIRS
 do
     cd "$g"
     echo -e "$(tput bold)Current Directory is $g $(tput sgr0)"
-    git fetch
-    sleep .1
+    git fetch --all
+    sleep .5
 done
 IFS=$OLD_IFS

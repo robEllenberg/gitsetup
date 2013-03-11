@@ -142,10 +142,11 @@ echo "Setting up bash completion, so that common git commands can be tab-complet
 if [[ $MINGW_CHECK == false ]]
 then
     #if wget is available, get the latest version from the repo
+    #TODO: match checked-out version to current git version
     wget https://raw.github.com/git/git/master/contrib/completion/git-completion.bash -O ~/.git-completion.bash
     wget https://raw.github.com/bobthecow/git-flow-completion/master/git-flow-completion.bash -O ~/.git-flow-completion.bash
 else
-    #TODO: Use curl to pull this down
+    #TODO: Use curl in MinGW
     cp .git-completion_current.bash ~/.git-completion.bash
 fi
 
