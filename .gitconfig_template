@@ -23,7 +23,9 @@
     untracked = cyan
 [merge]
     tool = diffuse
-
+[diff]
+    renames = copies
+    mnemonicprefix = true
 [difftool]
     prompt = false
     tool = diffuse

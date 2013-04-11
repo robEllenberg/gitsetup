@@ -53,3 +53,4 @@ cscope.out
 # Junk files from gedit, vim, etc.
 *.*.swp
 *~
+tags
