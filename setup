@@ -28,6 +28,10 @@ else
 fi
 }
 
+function hline(){
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+}
+
 function readData(){
     #Search for current names from .gitconfig, then find default full name from
     #the current user's passwd entry, otherwise keep the old entry.
@@ -60,17 +64,29 @@ function readData(){
     then
         GITHUB_USER=$DASL_USER
     fi
-    easyread "Finally, your Github user name" "$DASL_USER";GITHUB_USER=$REPLY
-
+    easyread "Enter your Github user name" "$DASL_USER";GITHUB_USER=$REPLY
     echo -e "\nFor read-only github URLs, would you like to use"
     read -p "Public Key authentication when attempting to push? [y/N]:" AUTH_METHOD
+    if [[ ${#AUTH_METHOD} == 0 ]]
+    then
+        AUTH_METHOD='N'
+    fi
 
-    echo "------------------------------------------------------------"
+    echo -e "\nA .gitignore file in your home folder tells git to ignore\nfiles that shouldn't be added to a repository."
+    read -p "Use included .gitignore file? [Y/n]:" GITIGNORE_BASIC
+    if [[ ${#GITIGNORE_BASIC} == 0 ]]
+    then
+        GITIGNORE_BASIC='Y'
+    fi
+
+    hline 
     echo "Your information as entered is as follows:"
     echo "Author Name         : $FULLNAME"
     echo "Email               : $EMAIL"
     echo "DASL User name      : $DASL_USER"
     echo "GitHub User name    : $GITHUB_USER"
+    echo "Use Public Key      : $AUTH_METHOD"
+    echo "Use .gitignore file : $GITIGNORE_BASIC"
     if [[ $AUTH_METHOD == 'Y' || $AUTH_METHOD == 'y' ]]
     then
         GITHUB_PUSH_URL="git@github.com:$GITHUB_USER\/"
@@ -80,8 +96,11 @@ function readData(){
         GITHUB_GENERIC_PUSH="https:\/\/$GITHUB_USER@github.com\/"
         AUTH_METHOD='N'
     fi
-    echo -e "Use SSH Public Key Authentication for Github? $AUTH_METHOD\n" 
-    read -p 'Are these correct? [Y/n]' DATAOK
+    read -p 'Are these correct? [Y/n]:' DATAOK
+    if [[ ${#DATAOK} == 0 ]]
+    then
+        DATAOK='Y'
+    fi
 }
 
 function bashrc_source() {
@@ -123,7 +142,7 @@ fi
 
 DATAOK='N'
 
-while [[ $DATAOK == 'N' || $DATAOK == 'n' ]]
+while [[ ! $DATAOK == 'Y' && ! $DATAOK == 'y' ]]
 do
     readData
 done
@@ -133,11 +152,10 @@ mv ~/.gitconfig ~/.gitconfig.old
 mv ~/.gitignore ~/.gitignore.old
 #Super ugly field replacement
 #TODO: Store the user data in a table for future use, or be smarter about default values
-echo "-------------------------------------------------------------"
+hline
 echo "Generating .gitconfig file from your information..."
 sed -e "s/<FIRST> <LAST>/$FULLNAME/g" -e "s/<EMAIL>/$EMAIL/g" -e "s/<DASL_USER>/$DASL_USER/g" -e "s/<GITHUB_USER>/$GITHUB_USER/g" -e "s/<GITHUB_PUSH_URL>/$GITHUB_PUSH_URL/g" -e "s/<GITHUB_GENERIC_PUSH>/$GITHUB_GENERIC_PUSH/g" .gitconfig_template > ~/.gitconfig
 
-#TODO: pull down the latest git completion from the repo?
 echo "Setting up bash completion, so that common git commands can be tab-completed at the prompt"
 if [[ $MINGW_CHECK == false ]]
 then
@@ -145,9 +163,6 @@ then
     #TODO: match checked-out version to current git version
     wget https://raw.github.com/git/git/master/contrib/completion/git-completion.bash -O ~/.git-completion.bash
     wget https://raw.github.com/bobthecow/git-flow-completion/master/git-flow-completion.bash -O ~/.git-flow-completion.bash
-else
-    #TODO: Use curl in MinGW
-    cp .git-completion_current.bash ~/.git-completion.bash
 fi
 
 # Setup Git Prompt (ignore for windows). This colored prompt showes
@@ -159,14 +174,11 @@ then
 fi
 
 #Optionally set up tweaked gitignore file based on common exclusions
-read -p "Use Rob's gitignore file? [Y/n]:" GITIGNORE_BASIC
 if [[ $GITIGNORE_BASIC == 'Y' || $GITIGNORE_BASIC == 'y' || ${#GITIGNORE_BASIC} == 0 ]]
 then
     cp .gitignore ~/.gitignore
 fi
 
-echo " "
-echo "-------------------------------------------------------------"
-echo " "
+hline
 echo "Setup complete!"
-echo " "
+hline
