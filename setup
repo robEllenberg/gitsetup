@@ -43,12 +43,6 @@ function readData(){
     then
         FULLNAME=`whatsmyname`
     fi
-    if [[ $DASL_USER == '' ]]
-    then
-        #Choose the default name from the full name, stripped of whitespace and
-        #converted to camel case.
-        DASL_USER=`echo "$FULLNAME" | sed -e 's/\ //' -e 's/^\(.\)/\L\1/'`
-    fi
 
     if [[ $EMAIL == '' ]]
     then
@@ -58,20 +52,7 @@ function readData(){
 
     easyread "Please enter your full name" "$FULLNAME";FULLNAME=$REPLY
     easyread "Please enter your email address" "$EMAIL";EMAIL=$REPLY
-    easyread "Now your DASL server user name" "$DASL_USER";DASL_USER=$REPLY
     
-    if [[ ${#GITHUB_USER} == 0 ]]
-    then
-        GITHUB_USER=$DASL_USER
-    fi
-    easyread "Enter your Github user name" "$DASL_USER";GITHUB_USER=$REPLY
-    echo -e "\nFor read-only github URLs, would you like to use"
-    read -p "Public Key authentication when attempting to push? [y/N]:" AUTH_METHOD
-    if [[ ${#AUTH_METHOD} == 0 ]]
-    then
-        AUTH_METHOD='N'
-    fi
-
     echo -e "\nA .gitignore file in your home folder tells git to ignore\nfiles that shouldn't be added to a repository."
     read -p "Use included .gitignore file? [Y/n]:" GITIGNORE_BASIC
     if [[ ${#GITIGNORE_BASIC} == 0 ]]
@@ -83,19 +64,7 @@ function readData(){
     echo "Your information as entered is as follows:"
     echo "Author Name         : $FULLNAME"
     echo "Email               : $EMAIL"
-    echo "DASL User name      : $DASL_USER"
-    echo "GitHub User name    : $GITHUB_USER"
-    echo "Use Public Key      : $AUTH_METHOD"
     echo "Use .gitignore file : $GITIGNORE_BASIC"
-    if [[ $AUTH_METHOD == 'Y' || $AUTH_METHOD == 'y' ]]
-    then
-        GITHUB_PUSH_URL="git@github.com:$GITHUB_USER\/"
-        GITHUB_GENERIC_PUSH="git@github.com:"
-    else
-        GITHUB_PUSH_URL="https:\/\/$GITHUB_USER@github.com\/$GITHUB_USER\/"
-        GITHUB_GENERIC_PUSH="https:\/\/$GITHUB_USER@github.com\/"
-        AUTH_METHOD='N'
-    fi
     read -p 'Are these correct? [Y/n]:' DATAOK
     if [[ ${#DATAOK} == 0 ]]
     then
@@ -137,7 +106,7 @@ INSTALL_APPS='N'
 read -p 'Install recommended support applications? [y/N]' INSTALL_APPS
 if [[ $INSTALL_APPS == 'Y' || $INSTALL_APPS == 'y'  && $MINGW_CHECK == false ]]
 then
-    sudo apt-get install git-core vim-gtk gitg gitk diffuse git-flow
+    sudo apt-get install git-core vim-gtk gitg gitk diffuse
 fi
 
 DATAOK='N'
@@ -154,7 +123,7 @@ mv ~/.gitignore ~/.gitignore.old
 #TODO: Store the user data in a table for future use, or be smarter about default values
 hline
 echo "Generating .gitconfig file from your information..."
-sed -e "s/<FIRST> <LAST>/$FULLNAME/g" -e "s/<EMAIL>/$EMAIL/g" -e "s/<DASL_USER>/$DASL_USER/g" -e "s/<GITHUB_USER>/$GITHUB_USER/g" -e "s/<GITHUB_PUSH_URL>/$GITHUB_PUSH_URL/g" -e "s/<GITHUB_GENERIC_PUSH>/$GITHUB_GENERIC_PUSH/g" .gitconfig_template > ~/.gitconfig
+sed -e "s/<FIRST> <LAST>/$FULLNAME/g" -e "s/<EMAIL>/$EMAIL/g" .gitconfig_template > ~/.gitconfig
 
 echo "Setting up bash completion, so that common git commands can be tab-completed at the prompt"
 if [[ $MINGW_CHECK == false ]]

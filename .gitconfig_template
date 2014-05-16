@@ -43,8 +43,6 @@
     root = rev-parse --show-toplevel
     #Experimental url-expansion in case you want a hard-coded url after the
     #fact, or want to convert your current URL's to this system for some reason
-    url-expand = !"sed -i -e 's,mygithub:,git://github.com/<GITHUB_USER>/,g' -e 's,github:,git://github.com/,g' -e 's,mydasl:,<DASL_USER>@dasl.mem.drexel.edu:~/repos/,g' -e 's,dasl:,<DASL_USER>@dasl.mem.drexel.edu:/home/,g' .git/config"
-    url-contract = !"sed -i -e 's,git://github.com/<GITHUB_USER>/,mygithub:,g' -e 's,git://github.com/,github:,g' -e 's,<DASL_USER>@dasl.mem.drexel.edu:~/repos/,mydasl:,g' -e 's,<DASL_USER>@dasl.mem.drexel.edu:/home/,dasl:,g' .git/config"
     #Simple command to explicitly un-add changes that have been staged
     stage = add
     unstage = reset --
@@ -61,38 +59,10 @@
     ci = commit
     co = checkout
     br = branch 
-    diff = diff --word-diff
+    wdiff = diff --color-words
     dc = diff --cached
 [branch]
     autosetupmerge = true
 [core]
     editor = vim
     excludesfile = ~/.gitignore
-#URL substitution with standard scp syntax allows git-cola to push / pull without needing to consult ./ssh/config
-[url "<DASL_USER>@dasl.mem.drexel.edu:~/repos/"]
-    insteadOf = mydasl:
-#Crude hack since git config does first-match. If the strict "mydasl" match doesn't work, try the broader root substitution:
-[url "<DASL_USER>@dasl.mem.drexel.edu:/home/"]
-    insteadOf = dasl:
-#This substitution allows a simple shortcut to your own github account
-# Use like this: git clone mygithub:repo points directly to that repo
-# git://github.com/<GITHUB_USER>/repo
-[url "git://github.com/<GITHUB_USER>/"]
-    insteadOf = mygithub:
-
-[url "<GITHUB_GENERIC_PUSH>"]
-    pushInsteadOf = git://github.com/
-    pushInsteadOf = http://github.com/
-    pushInsteadOf = github:
-
-#This substitution allows a simple shortcut to github
-# Use like this: git clone github:username/repo
-[url "git://github.com/"]
-    insteadOf = github:
-
-# This substitution automatically gives you write access to a read-only
-#   account if your username has write permissions (this does NOT 
-#   magically grant write access otherwise.
-[url "<GITHUB_PUSH_URL>"]
-    pushInsteadOf = mygithub:
-
