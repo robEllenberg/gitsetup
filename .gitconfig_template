@@ -22,23 +22,17 @@
     changed = green
     untracked = cyan
 [merge]
-    tool = diffuse
+    tool = bcompare
 [diff]
     renames = copies
     mnemonicprefix = true
 [difftool]
     prompt = false
-    tool = diffuse
+    tool = bcompare
 [alias]
     #Fancy history graph in the terminal
     graph = log --oneline --date-order --graph --all --decorate
-    #diff commands
-    diffuse = difftool
-    #Use this command to update your local branch to match the remote, then put
-    #your changes on top. This prevents messy merges down the road by resolving
-    #conflicts commit-by-commit, instead of all at once as with a merge.
-    #NOTE: deprecated due to possible risk of lost data
-    #update = pull --rebase
+
     #Show the root directory of your current git repository (useful for some scripts)
     root = rev-parse --show-toplevel
     #Experimental url-expansion in case you want a hard-coded url after the
@@ -53,14 +47,7 @@
     unassume = update-index --no-assume-unchanged
     assumed = "!git ls-files -v | grep ^h | cut -c 3-"
     unassume-all = "!git assumed | xargs git update-index --no-assume-unchanged"
-    cp = cherry-pick
-    st = status -s
-    cl = clone
-    ci = commit
-    co = checkout
-    br = branch 
-    wdiff = diff --color-words
-    dc = diff --cached
+
 [branch]
     autosetupmerge = true
 [core]
