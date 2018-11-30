@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# "Publishes" a branch that has not yet been pushed, i.e. push and set upstream
+
+REMOTE_NAME=${1:-origin}
+
+git push --set-upstream $REMOTE_NAME $(git rev-parse --abbrev-ref HEAD)
