@@ -21,14 +21,6 @@
     added = yellow
     changed = green
     untracked = cyan
-[merge]
-    tool = bcompare
-[diff]
-    renames = copies
-    mnemonicprefix = true
-[difftool]
-    prompt = false
-    tool = bcompare
 [alias]
     #Fancy history graph in the terminal
     graph = log --oneline --date-order --graph --all --decorate
@@ -40,6 +32,7 @@
     #Simple command to explicitly un-add changes that have been staged
     stage = add
     unstage = reset --
+    ls-staged = diff --cached
     #Other useful aliases for ignoring changes in specific files
     #Copied from:
     #http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
@@ -53,3 +46,24 @@
 [core]
     editor = vim
     excludesfile = ~/.gitignore
+
+[diff]
+    renames = copies
+    mnemonicprefix = true
+
+[difftool]
+  prompt = false
+
+[difftool "bcompare"]
+  trustExitCode = true
+  cmd = bcompare \"$LOCAL\" \"$REMOTE\"
+
+[mergetool]
+  prompt = false
+
+[mergetool "bcompare"]
+  trustExitCode = true
+  cmd = bcompare \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+
+[rebase]
+	instructionFormat = [%an @ %ar] %s
