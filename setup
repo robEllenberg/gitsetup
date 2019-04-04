@@ -106,7 +106,7 @@ INSTALL_APPS='N'
 read -p 'Install recommended support applications? [y/N]' INSTALL_APPS
 if [[ $INSTALL_APPS == 'Y' || $INSTALL_APPS == 'y'  && $MINGW_CHECK == false ]]
 then
-    sudo apt-get install git-core vim-gtk gitg gitk diffuse
+    sudo apt-get install git-core vim-gtk gitg gitk
 fi
 
 DATAOK='N'
