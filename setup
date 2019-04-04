@@ -119,6 +119,8 @@ done
 # Backup old git files for user
 mv ~/.gitconfig ~/.gitconfig.old
 mv ~/.gitignore ~/.gitignore.old
+mv ~/.git-script-completion.bash ~/.git-script-completion.bash
+
 #Super ugly field replacement
 #TODO: Store the user data in a table for future use, or be smarter about default values
 hline
@@ -132,6 +134,7 @@ then
     echo "Setting up colored bash prompt for git repositories..."
     bashrc_source ".git-prompt.bash"
     bashrc_source ".git-script-extras.bash"
+    cp git-script-completion.bash ~/.git-script-completion.bash
 fi
 
 #Optionally set up tweaked gitignore file based on common exclusions

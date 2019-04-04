@@ -31,3 +31,5 @@ elif [ $CONN = ssh -a $USR = nopriv ] ; then
 elif [ $CONN = ssh -a $USR = priv ] ; then
     PS1='\[\033[35m\]\u@\h\[\033[00m\]'$PS1_SUFFIX
 fi
+
+source ~/.git-script-completion.bash
