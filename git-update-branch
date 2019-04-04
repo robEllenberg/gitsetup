@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+CURRENT_BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
+if [[ "$CURRENT_BRANCH_NAME" == "HEAD" ]]
+then
+    echo "Not on a branch, can't perform rebase"
+    exit 1
+fi
+
+NEW_BASE=${2:-origin/develop2}
+git branch -f backup/update-branch/$CURRENT_BRANCH_NAME-"$(git rev-parse --short HEAD)" || exit 1
+git rebase -i $NEW_BASE
