@@ -58,6 +58,8 @@
   trustExitCode = true
   cmd = bcompare \"$LOCAL\" \"$REMOTE\"
 
+[merge]
+  tool = bcompare
 [mergetool]
   prompt = false
 

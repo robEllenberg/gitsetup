@@ -54,3 +54,10 @@ cscope.out
 *.*.swp
 *~
 tags
+
+#Pycharm
+.idea
+
+#QtCreator
+*.creator.user
+*.creator
