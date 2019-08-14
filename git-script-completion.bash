@@ -9,5 +9,5 @@ _git_update_branch ()
 _git_publish ()
 {
   # you can return anything here for the autocompletion for example all the branches
-  __gitcomp_nl "$(__git_refs)"
+  __gitcomp_nl "$(__git_remotes)"
 }
