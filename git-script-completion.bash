@@ -6,8 +6,26 @@ _git_update_branch ()
   __gitcomp_nl "$(__git_refs)"
 }
 
+_git_stash_branch ()
+{
+  # you can return anything here for the autocompletion for example all the branches
+  __gitcomp_nl "$(__git_refs)"
+}
+
 _git_publish ()
 {
   # you can return anything here for the autocompletion for example all the branches
   __gitcomp_nl "$(__git_remotes)"
+}
+
+_git_pp_checkout ()
+{
+  # you can return anything here for the autocompletion for example all the branches
+  __gitcomp_nl "$(__git_refs)"
+}
+
+_git_pp_branch ()
+{
+  # you can return anything here for the autocompletion for example all the branches
+  __gitcomp_nl "$(__git_refs)"
 }

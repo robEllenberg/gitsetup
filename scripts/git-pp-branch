@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+BRANCH_NAME=$1
+if [ -z "$BRANCH_NAME" ]
+then
+    echo "Must specify a branch name"
+    exit 1
+fi
+BASE_NAME=${2:-origin/develop2}
+
+git checkout -b $BRANCH_NAME $BASE_NAME

@@ -8,5 +8,6 @@ then
 fi
 
 NEW_BASE=${1:-origin/develop2}
+#git fetch
 git branch -f backup/update-branch/$CURRENT_BRANCH_NAME-"$(git rev-parse --short HEAD)" || exit 1
 git rebase -i $NEW_BASE
