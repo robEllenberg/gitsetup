@@ -61,3 +61,7 @@ tags
 #QtCreator
 *.creator.user
 *.creator
+*.config
+*.files
+*.includes
+
