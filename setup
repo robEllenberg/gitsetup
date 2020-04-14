@@ -76,9 +76,9 @@ function bashrc_source() {
 
 local SOURCED_SEARCH=`grep $1 ~/.bashrc`
 
+cp $1 ~/$1
 if [[ ${#SOURCED_SEARCH} == 0 ]]
 then
-    cp $1 ~/$1
     echo "source ~/$1" >> ~/.bashrc
 fi
 }
