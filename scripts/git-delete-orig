@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+cd `git root`
+for f in `find -name "*.orig"`
+do 
+    echo "Deleting $f"
+    rm $f
+done
+
